@@ -1,8 +1,7 @@
-# Other version
 class BasicOrder:
     """
         Basic text encryption anatomy for learning
-        version 0.01
+        version 0.1
     """
 
     def __init__(self, value):
@@ -46,15 +45,4 @@ class BasicOrder:
 
     def encryption_key(self):
         """Make hard-to-rad data, to un-readable data with key"""
-        pass
-
-
-class Idea(str):
-    """
-        Other version base of 'str'
-        This is just an idea...
-    """
-
-    def __init__(self):
-        super(Idea, self).__init__()
         pass
