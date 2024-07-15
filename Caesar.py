@@ -5,7 +5,7 @@ import sys
 Encrypts a string using Caesar Cipher.
 
 Author: NightFox
-Version: 1.1
+Version: 1.2
 TimeStamp: 1720999524.7264638
 """
 
@@ -24,18 +24,18 @@ def safe_key(status=True):
 
 
 def overflow(value: int):
-    if value > 26:
-        return value % 26
+    if value > 52:
+        return value % 52
     else:
         return value
 
 
 def shift(key: int):
     k = overflow(key)
-    letters = list(string.ascii_lowercase)
+    letters = list(string.ascii_lowercase + string.ascii_uppercase)
 
     start = (-1 * k)
-    end = 26 - k
+    end = 52 - k
 
     _a = letters[:end]
     _b = letters[start:]
@@ -47,9 +47,9 @@ def shift(key: int):
 
 
 def str_to_str(value: str, key: int):
-    letters = list(string.ascii_lowercase)
+    letters = list(string.ascii_lowercase + string.ascii_uppercase)
     _shift = shift(key)
-    _list = [_shift[letters.index(i)] if i in letters else i for i in value.lower()]  # ignore un-ascii character
+    _list = [_shift[letters.index(i)] if i in letters else i for i in value]  # ignore un-ascii character
     return ''.join(_list)
 
 
@@ -59,7 +59,7 @@ def str_shift(value: str, key: int):
 
 
 def str_unshift(value: str, key: int):
-    k = 26 - overflow(key)
+    k = 52 - overflow(key)
     return str_to_str(value, k)  # Unshift 5: czggj -> hello
 
 
