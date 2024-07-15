@@ -5,7 +5,7 @@ import sys
 Encrypts a string using Caesar Cipher.
 
 Author: NightFox
-Version: 1.0
+Version: 1.1
 TimeStamp: 1720999524.7264638
 """
 
@@ -32,13 +32,13 @@ def overflow(value: int):
 
 def shift(key: int):
     k = overflow(key)
-    _let = list(string.ascii_lowercase)
+    letters = list(string.ascii_lowercase)
 
     start = (-1 * k)
     end = 26 - k
 
-    _a = _let[:end]
-    _b = _let[start:]
+    _a = letters[:end]
+    _b = letters[start:]
 
     if k == 0:
         return _a
@@ -47,29 +47,31 @@ def shift(key: int):
 
 
 def str_to_str(value: str, key: int):
-    _let = list(string.ascii_lowercase)
+    letters = list(string.ascii_lowercase)
     _shift = shift(key)
-    _list = [_shift[_let.index(i)] for i in value.lower()]
+    _list = [_shift[letters.index(i)] if i in letters else i for i in value.lower()]  # ignore un-ascii character
     return ''.join(_list)
 
 
-def str_shift(value: str, key: int = 0):
+def str_shift(value: str, key: int):
     k = overflow(key)
-    return str_to_str(value, k)
+    return str_to_str(value, k)  # Shift 5: hello -> czggj
 
 
-def str_unshift(value: str, key: int = 0):
+def str_unshift(value: str, key: int):
     k = 26 - overflow(key)
-    return str_to_str(value, k)
+    return str_to_str(value, k)  # Unshift 5: czggj -> hello
 
 
 # ORD
 def str_to_ord(value, **kwargs):
-    o = [str(ord(_chr)).zfill(3) for _chr in str(value)]  # length=3
-    return o  # input: str | output: list
+    # list of ord 's
+    o = [str(ord(_chr)).zfill(3) for _chr in str(value)]  # 'h' : '104' | length=3
+    return ''.join(o) + '0'  # input: str > output: str
 
 
 # CHR
 def int_to_chr(value, **kwargs):
-    t = [chr(int(_ord)) for _ord in value if len(_ord) == 3]  # length=3
-    return ''.join(t)  # input: list | output: str
+    # list of chr 's
+    c = [chr(int(_ord)) for _ord in [value[i:i + 3] for i in range(0, len(value) - 2, 3)]]  # '104' : 'h' | length=3
+    return ''.join(c)  # input: str > output: str
